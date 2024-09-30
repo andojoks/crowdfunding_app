@@ -4,16 +4,19 @@ services:
   app:
     image: app-name:latest
     build:
-      target: web
+      target: app
       context: .
     env_file:
       - .env
+
     ports:
       - "8000:80"
     volumes:
       - .:/var/www/html
     depends_on:
       - db
+    command: >
+      sh -c "php artisan migrate && php artisan db:seed && php artisan key:generate"
   
   db:
     platform: "linux/amd64"
