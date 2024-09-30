@@ -14,15 +14,13 @@ services:
       - .:/var/www/html
     depends_on:
       - db
-    command: >
-      sh -c "php artisan migrate && php artisan db:seed && php artisan key:generate"
+    # command: >
+    #   sh -c "php artisan migrate && php artisan db:seed && php artisan key:generate"
 
 
   db:
     platform: "linux/amd64"
     image: mysql:5.7
-    env_file:
-      - .env
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: crowdfunding
