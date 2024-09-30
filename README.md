@@ -41,8 +41,8 @@ erDiagram
     USER ||--o{ USERDONATION : "has many"
     USERDONATION }--|| USER : "belongs to"
     USERDONATION }--|| DONATION : "belongs to"
-
 ```
+
 By following this schema, the project tracks users, the donations they initiate, and the contributions they make to various campaigns.
 
 * * * * *
