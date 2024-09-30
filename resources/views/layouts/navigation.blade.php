@@ -11,7 +11,7 @@
             <a class="navbar-brand" href="{{ url('/') }}">Home</a>
         </div>
 
-        <div id="navbar-collapse" class="navbar-collapse collapse">
+        <div id="navbar-collapse" class="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"><a
                         href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
