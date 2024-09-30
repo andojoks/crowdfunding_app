@@ -27,7 +27,7 @@
                             <span style="font-size: 5rem; font-weight: bold;">4</span>
                         </h2>
                         <h3 class="h2" style="margin-bottom: 10px;">Oops! You're lost.</h3>
-                        <p style="margin-bottom: 30px;">The page you are looking for was not found.</p>
+                        <p style="margin-bottom: 30px;">{{ $exception->getMessage() ?: 'The page does not exist.' }}</p>
                         <a class="btn btn-primary custom-button" role="button" href="{{ route('dashboard') }}">
                             Back to Home
                         </a>

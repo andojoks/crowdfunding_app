@@ -12,7 +12,7 @@
             </div>
 
             <div class=" text-center mb10 probootstrap-animate" data-animate-effect="fadeIn">
-                <a href="{{ route('causes.create') }}" class="btn btn-primary btn-lg">Add Donation Cause</a>
+                <a href="{{ route('cause.create') }}" class="btn btn-primary btn-lg">Add Donation Cause</a>
             </div>
 
             <div class="row">
@@ -46,16 +46,21 @@
                                 </div>
 
                                 <h2 style="height: 50px; overflow: hidden;">
-                                    <a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}">
+                                    <a href="{{ route('cause.details', ['id' => $donation->id]) }}">
                                         {{ Str::words($donation->title, 8, '...') }}
                                     </a>
                                 </h2>
 
-                                <div class="probootstrap-date"><i class="icon-calendar"></i> 2 hours remaining</div>
+                                <div class="probootstrap-date">
+                                    <i class="icon-calendar"></i>
+                                    <span style="text-transform: capitalize;" class="relative-time"
+                                        data-timestamp="{{ $donation->due_date }}"></span>
+                                </div>
+
 
                                 <p style="height: 100px; overflow: hidden;">
                                     {{ Str::words($donation->description, 15, '...') }}</p>
-                                <p><a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                <p><a href="{{ route('cause.details', ['id' => $donation->id]) }}"
                                         class="btn btn-primary btn-black">View Details</a></p>
                             </div>
                         </div>

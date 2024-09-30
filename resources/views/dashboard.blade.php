@@ -86,7 +86,7 @@
 
                                 <p style="height: 100px; overflow: hidden;">
                                     {{ Str::words($donation->description, 15, '...') }}</p>
-                                <p><a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                <p><a href="{{ route('cause.details', ['id' => $donation->id]) }}"
                                         class="btn btn-primary btn-black">View Details</a></p>
                             </div>
                         </div>

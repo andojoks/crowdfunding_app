@@ -13,7 +13,7 @@
 
                 <div class="col-md-12">
                     <form
-                        action="{{ $isEditing ? route('cause.update', ['id' => $donation->id ?? 0]) : route('causes.store') }}"
+                        action="{{ $isEditing ? route('cause.update', ['id' => $donation->id ?? 0]) : route('cause.create') }}"
                         method="POST">
                         @csrf
 
@@ -90,7 +90,7 @@
                             <div class="col-md-6">
                                 <!-- Cancel button on the right -->
                                 @if ($isEditing && isset($donation))
-                                    <a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                    <a href="{{ route('cause.details', ['id' => $donation->id]) }}"
                                         class="btn btn-default pull-right">Cancel</a>
                                 @else
                                     <a href="{{ route('causes.index') }}" class="btn btn-default pull-right">Cancel</a>

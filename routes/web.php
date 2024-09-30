@@ -28,10 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/causes/{id}/donation', [DonationController::class, 'donate'])->name('cause.donate');
 
     // Route to show the form to create a new cause
-    Route::get('/causes/add', [DonationController::class, 'addCause'])->name('causes.create');
+    Route::get('/causes/add', [DonationController::class, 'addCause'])->name('cause.create');
 
     // Route to handle the creation of a new cause
-    Route::post('/causes/add', [DonationController::class, 'store'])->name('causes.store');
+    Route::post('/causes/add', [DonationController::class, 'store'])->name('cause.create');
 
     // Route to show the form to edit an existing cause
     Route::get('/causes/{id}/edit', [DonationController::class, 'editCause'])->name('cause.edit');
@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route to show the details of a specific cause (publicly accessible)
-Route::get('/causes/{id}', [DonationController::class, 'show'])->name('causes.view_cause');
+Route::get('/causes/{id}', [DonationController::class, 'show'])->name('cause.details');
 
 
 require __DIR__ . '/auth.php';

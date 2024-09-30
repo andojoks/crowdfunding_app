@@ -27,7 +27,7 @@ class DonationFactory extends Factory
             'target_amount' => $this->faker->numberBetween(5000, 10000),
             'status' => 'open', // Default status
             'title' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->sentence(15),
             'due_date' => Carbon::now('Africa/Lagos')->addDays(rand(8, 20))->setTimezone('UTC'),
             'details' => null,
             'created_at' => now(),

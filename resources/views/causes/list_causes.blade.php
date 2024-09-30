@@ -59,7 +59,7 @@
                                 </div>
 
                                 <h2 style="height: 50px; overflow: hidden;">
-                                    <a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}">
+                                    <a href="{{ route('cause.details', ['id' => $donation->id]) }}">
                                         {{ Str::words($donation->title, 8, '...') }}
                                     </a>
                                 </h2>
@@ -72,7 +72,7 @@
 
                                 <p style="height: 100px; overflow: hidden;">
                                     {{ Str::words($donation->description, 15, '...') }}</p>
-                                <p><a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                <p><a href="{{ route('cause.details', ['id' => $donation->id]) }}"
                                         class="btn btn-primary btn-black">View Details</a></p>
                             </div>
                         </div>

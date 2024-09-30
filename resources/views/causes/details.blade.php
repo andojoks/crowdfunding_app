@@ -103,7 +103,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center section-heading probootstrap-animate"
                         data-animate-effect="fadeIn">
-                        <h2>Donations To This Cause</h2>
+                        <h2>People Donating To This Cause</h2>
                         <p class="lead">Sed a repudiandae impedit voluptate nam Deleniti dignissimos perspiciatis
                             nostrum
                             porro nesciunt</p>

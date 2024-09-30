@@ -35,7 +35,7 @@ class DonationController extends Controller
 
     /**
      * Display the details of a specific donation cause.
-     * Route: causes.view_cause
+     * Route: cause.details
      * 
      * @return \Illuminate\View\View
      */
@@ -45,8 +45,7 @@ class DonationController extends Controller
         $donation = Donation::with('user')->find($id);
 
         if (!$donation) {
-            // Show 404 page if donation not found
-            return view('404_not_found');
+            abort(404, 'Cannot find the donation record');
         }
 
         // Fetch recent donors for this donation, summing up and grouping their donations
@@ -67,7 +66,7 @@ class DonationController extends Controller
             ->limit(4)
             ->get();
 
-        return view('causes.view_cause', compact('donation', 'recentDonors'));
+        return view('causes.details', compact('donation', 'recentDonors'));
     }
 
     /**
@@ -116,8 +115,11 @@ class DonationController extends Controller
         $donation = Donation::find($donation_id);
 
         if (!$donation) {
-            // Show 404 page if donation not found
-            return view('404_not_found');
+            abort(404, 'Cannot find the donation record');
+        }
+
+        if ($donation->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to edit this donation.');
         }
 
         $isEditing = true;  // Set editing to true
@@ -148,7 +150,7 @@ class DonationController extends Controller
             'details' => $request->get('details'),  // Optional field
         ]);
 
-        return redirect()->route('causes.view_cause', ['id' => $donation->id]);
+        return redirect()->route('cause.details', ['id' => $donation->id]);
     }
 
     /**
@@ -169,14 +171,18 @@ class DonationController extends Controller
         $donation = Donation::find($donation_id);
 
         if (!$donation) {
-            // Show 404 page if donation not found
-            return view('404_not_found');
+            abort(404, 'Cannot find the donation record');
+        }
+
+        // Ensure that only the owner of the donation can edit it
+        if ($donation->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to edit this donation.');
         }
 
         // Update the donation record
         $donation->update($validated);
 
-        return redirect()->route('causes.view_cause', ['id' => $donation->id]);
+        return redirect()->route('cause.details', ['id' => $donation->id]);
     }
 
     /**
@@ -195,12 +201,12 @@ class DonationController extends Controller
         $donation = Donation::find($donation_id);
 
         if (!$donation) {
-            return redirect()->route('causes.view_cause', ['id' => $donation_id])
+            return redirect()->route('cause.details', ['id' => $donation_id])
                 ->with('error', 'Donation could not be found. Please try again later.');
         }
 
         if ($donation->status == 'completed') {
-            return redirect()->route('causes.view_cause', ['id' => $donation_id])
+            return redirect()->route('cause.details', ['id' => $donation_id])
                 ->with('message', 'The target amount for this donation has already been reached.');
         }
 
@@ -216,7 +222,7 @@ class DonationController extends Controller
             $donation->update(['status' => 'completed']);
         }
 
-        return redirect()->route('causes.view_cause', ['id' => $donation_id])
+        return redirect()->route('cause.details', ['id' => $donation_id])
             ->with('message', 'Thank you for your donation!');
     }
 }
