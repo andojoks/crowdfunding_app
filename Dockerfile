@@ -15,7 +15,6 @@ RUN a2enmod rewrite
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql zip
 
-
 # Configure Apache DocumentRoot to point to Laravel's public directory
 # and update Apache configuration files
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
@@ -33,9 +32,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install project dependencies
 RUN composer install
-
-# Copy the example environment file and rename it to .env
-# RUN cp .env.example .env
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache

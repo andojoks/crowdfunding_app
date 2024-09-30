@@ -1,66 +1,208 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Detailed Interface Documentation: Donation Website Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+#### Project Overview
 
-## About Laravel
+This project is a **Laravel 11** application that allows users to donate to various causes. It features a modern interface for listing, creating, and donating to causes. The project is fully **Dockerized** for easy deployment and development, with a robust backend powered by Laravel's latest features.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##### Database Structure
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project consists of three primary models: User, Donation, and UserDonation. These models represent the users of the application, donation campaigns, and the transactions (donations) made by users, respectively.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```mermaid
+erDiagram
+    USER {
+        int id
+        string name
+        string email
+        string password
+        datetime email_verified_at
+    }
+    
+    DONATION {
+        int id
+        int user_id
+        decimal target_amount
+        string status
+        string title
+        string description
+        datetime due_date
+        string details
+    }
 
-## Learning Laravel
+    USERDONATION {
+        int id
+        int user_id
+        int donation_id
+        decimal amount
+    }
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    USER ||--o{ DONATION : "has many"
+    DONATION ||--o{ USERDONATION : "has many"
+    USER ||--o{ USERDONATION : "has many"
+    USERDONATION }--|| USER : "belongs to"
+    USERDONATION }--|| DONATION : "belongs to"
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+By following this schema, the project tracks users, the donations they initiate, and the contributions they make to various campaigns.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* * * * *
 
-## Laravel Sponsors
+### 1\. **Installation and Setup**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### Prerequisites
 
-### Premium Partners
+-   **Docker** must be installed on your machine. If you don't have Docker installed, use the following command to install it:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Installing Project Dependencies
 
-## Contributing
+1.  **Clone the repository**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    git https://github.com/andojoks/crowdfunding_app.git
+    cd donation-website
+    ```
 
-## Code of Conduct
+2.  **Build and start Docker containers**:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  ```bash
+    docker compose up -d
+  ```
 
-## Security Vulnerabilities
+    This will set up the application in Docker, pulling all required services, including the database, web server, and PHP container.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3.  **Generate application key** (necessary for application encryption):
 
-## License
+    ```bash
+    docker compose exec app php artisan key:generate`
+    ```
+       
+4.  **Run database migrations**:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    docker compose exec app php artisan migrate`
+    ```
+
+5.  **Seed the database** (optional, for testing or initial data):
+
+    ```bash
+    docker compose exec app php artisan db:seed
+    ```
+
+* * * * *
+
+### 2\. **Application Interfaces**
+
+#### **Home Page (`/`)**
+
+-   **Purpose**: Display an overview of the most popular causes based on donation activity.
+-   **Functionality**:
+    -   Show highlighted causes with the most frequent donations.
+    -   Allow users to browse through more causes.
+-   **Access**: Public.
+-   **Controller**: `HomeController@index`.
+
+#### **Causes Page (`/causes`)**
+
+-   **Purpose**: List all open causes available for donation.
+-   **Functionality**:
+    -   Show a list of causes where users can make donations.
+    -   Causes are presented with short descriptions and links to full details.
+-   **Access**: Public.
+-   **Controller**: `DonationController@index`.
+
+#### **Cause Details Page (`/causes/{id}`)**
+
+-   **Purpose**: Display detailed information about a specific cause and allow users to make donations.
+-   **Functionality**:
+    -   Show detailed information about the selected cause.
+    -   Allow authenticated users to make donations directly from this page.
+-   **Access**: Public for viewing; only authenticated users can make donations.
+-   **Controller**: `CauseController@show`, `DonationController@store`.
+
+#### **My Causes Page (`/my-causes`)**
+
+-   **Purpose**: Allows authenticated users to manage their own causes.
+-   **Functionality**:
+    -   Users can create new causes and update existing ones.
+    -   Only non-completed causes can be edited.
+-   **Access**: Restricted to authenticated users.
+-   **Controller**: `CauseController@myCauses`.
+
+#### **Cause Form (`/causes/create` or `/causes/{id}/edit`)**
+
+-   **Purpose**: Create a new cause or edit an existing cause.
+-   **Functionality**:
+    -   Users can fill out forms to create or update causes.
+    -   Cause updates are restricted to non-completed causes.
+-   **Access**: Restricted to authenticated users.
+-   **Controller**: `CauseController@create`, `CauseController@update`.
+
+#### **Donation Form (`/causes/{id}`)**
+
+-   **Purpose**: Allow authenticated users to make donations to causes.
+-   **Functionality**:
+    -   Donation form appears on the cause details page for authenticated users.
+    -   Users can input the donation amount and payment details.
+-   **Access**: Restricted to authenticated users.
+-   **Controller**: `DonationController@store`.
+
+* * * * *
+
+### 3\. **Testing**
+
+This project uses **Pest** for feature and unit testing.
+
+#### Running Tests
+
+To run the Pest tests, use the following command within the PHP container:
+
+```bash
+docker compose exec app ./vendor/bin/pest
+```
+
+These tests cover various functionalities such as:
+
+-   **Unauthenticated access**: Ensure non-authenticated users cannot access donation and cause management features.
+-   **Cause creation and editing**: Tests for authenticated users to create and edit causes.
+-   **Donation process**: Verifies the donation process works correctly for authenticated users.
+-   **Popular causes**: Tests to ensure the most popular causes are highlighted on the home page.
+
+* * * * *
+
+### 4\. **Registration and Authentication**
+
+To access full features (e.g., creating causes, making donations), users must register and log in.
+
+1.  **Registration**:
+
+    -   Visit `http://localhost/register`.
+    -   Complete the registration form to create an account.
+2.  **Authentication**:
+
+    -   After registration, users can log in via `http://localhost/login`.
+
+    Once logged in, users can:
+
+    -   Manage their own causes on the **My Causes** page.
+    -   Create or update causes (non-completed).
+    -   Make donations to any listed cause.
+
+* * * * *
+
+### 5\. **Exploring the Application**
+
+Once registered and logged in, users can browse through the website and experience all its features:
+
+-   **Popular Causes**: On the home page, users can view the most popular causes.
+-   **Donate**: Users can navigate to any cause and make a donation.
+-   **My Causes**: Authenticated users can create and manage their own causes.
+
+Feel free to browse through the causes and **donate to a cause** that resonates with you!
+
+* * * * *
+
+### Conclusion
+
+This professional-grade Laravel 11 application, packaged in Docker for easy deployment, provides a seamless experience for donating to causes. It integrates powerful features like authenticated user access, real-time cause updates, and secure donation processing.
+
+If you encounter any issues during setup or deployment, ensure that all Docker services are running properly and that the database is migrated and seeded. Feel free to contribute, donate, and help causes flourish!
