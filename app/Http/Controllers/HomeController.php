@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donation;
+use App\Models\UserDonation;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -21,6 +22,14 @@ class HomeController extends Controller
             ->limit(3)                                        // Limit the result to the top 3 donations
             ->get();                                          // Retrieve the donations as a collection
 
-        return view('dashboard', compact('popularDonations'));
+        // Get the most recent 4 donations with their users
+        $recentDonations = UserDonation::with('user:id,name')
+            ->select('user_id', 'donation_id', 'amount', 'created_at')
+            ->groupBy('user_id', 'donation_id', 'amount', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get();
+
+        return view('dashboard', compact('popularDonations', 'recentDonations'));
     }
 }

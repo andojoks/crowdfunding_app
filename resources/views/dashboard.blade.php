@@ -45,59 +45,61 @@
                 </div>
             </div>
             <div class="row">
-                @foreach ($popularDonations as $donation)
-                    <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate"
-                        data-animate-effect="fadeIn">
-                        <div class="probootstrap-image-text-block probootstrap-cause">
-                            <figure>
-                                <img src="/img/img_sm_1.jpg" alt="cause cover image"
-                                    class="img-responsive">
-                            </figure>
-                            <div class="probootstrap-cause-inner">
-                                <div class="progress">
-                                    @php
-                                        // Calculate the percentage and ensure it's capped at 100%
-                                        $percentage = round(
-                                            ($donation->amount_received / $donation->target_amount) * 100,
-                                            1,
-                                        );
-                                        $percentage = $percentage > 100 ? 100 : $percentage; // Cap at 100%
-                                    @endphp
-
-                                    <div class="progress-bar progress-bar-s2" data-percent="{{ $percentage }}">
-                                    </div>
-                                </div>
-
-                                <div class="row mb30">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 probootstrap-raised">Raised: <span
-                                            class="money">$ {{ $donation->amount_received }}</span></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 probootstrap-goal">Goal: <span
-                                            class="money">${{ $donation->target_amount }}</span></div>
-                                </div>
-
-                                <h2 style="height: 50px; overflow: hidden;"><a
-                                        href="#">{{ Str::words($donation->title, 8, '...') }}</a></h2>
-                                {{-- <div class="probootstrap-date"><i class="icon-calendar"></i> 2 hours remaining</div> --}}
-
-                                <div class="probootstrap-date">
-                                    <i class="icon-calendar"></i>
-                                    <span style="text-transform: capitalize;"  class="relative-time" data-timestamp="{{ $donation->due_date }}"></span>
-                                </div>
-
-                                <p style="height: 100px; overflow: hidden;">
-                                    {{ Str::words($donation->description, 15, '...') }}</p>
-                                <p><a href="{{ route('cause.details', ['id' => $donation->id]) }}"
-                                        class="btn btn-primary btn-black">View Details</a></p>
-                            </div>
+                @if (count($popularDonations) == 0)
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>No Donations Present At The Moment</p>
                         </div>
                     </div>
-                @endforeach
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p>Save the future for the little children by donating. <a href="causes.html">See all causes</a>
-                    </p>
-                </div>
+                @else
+                    @foreach ($popularDonations as $donation)
+                        <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate"
+                            data-animate-effect="fadeIn">
+                            <div class="probootstrap-image-text-block probootstrap-cause">
+                                <figure>
+                                    <img src="/img/img_sm_1.jpg" alt="cause cover image" class="img-responsive">
+                                </figure>
+                                <div class="probootstrap-cause-inner">
+                                    <div class="progress">
+                                        @php
+                                            // Calculate the percentage and ensure it's capped at 100%
+                                            $percentage = round(
+                                                ($donation->amount_received / $donation->target_amount) * 100,
+                                                1,
+                                            );
+                                            $percentage = $percentage > 100 ? 100 : $percentage; // Cap at 100%
+                                        @endphp
+
+                                        <div class="progress-bar progress-bar-s2" data-percent="{{ $percentage }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb30">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 probootstrap-raised">Raised: <span
+                                                class="money">$ {{ $donation->amount_received }}</span></div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 probootstrap-goal">Goal: <span
+                                                class="money">${{ $donation->target_amount }}</span></div>
+                                    </div>
+
+                                    <h2 style="height: 50px; overflow: hidden;"><a
+                                            href="#">{{ Str::words($donation->title, 8, '...') }}</a></h2>
+                                    {{-- <div class="probootstrap-date"><i class="icon-calendar"></i> 2 hours remaining</div> --}}
+
+                                    <div class="probootstrap-date">
+                                        <i class="icon-calendar"></i>
+                                        <span style="text-transform: capitalize;" class="relative-time"
+                                            data-timestamp="{{ $donation->due_date }}"></span>
+                                    </div>
+
+                                    <p style="height: 100px; overflow: hidden;">
+                                        {{ Str::words($donation->description, 15, '...') }}</p>
+                                    <p><a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                            class="btn btn-primary btn-black">View Details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
@@ -114,56 +116,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="probootstrap-donors text-center probootstrap-animate">
-                        <figure class="media">
-                            <img src="/img/person_6.jpg" alt="cause cover image"
-                                class="img-responsive">
-                        </figure>
-                        <div class="text">
-                            <h3>Linda Reyez</h3>
-                            <p class="donated">Donated <span class="money">$500.00</span></p>
+                @if (count($recentDonations) == 0)
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>No Recorded Donation Activity</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="probootstrap-donors text-center probootstrap-animate">
-                        <figure class="media">
-                            <img src="/img/person_1.jpg" alt="cause cover image"
-                                class="img-responsive">
-                        </figure>
-                        <div class="text">
-                            <h3>Chris Worth</h3>
-                            <p class="donated">Donated <span class="money">$1,500.00</span></p>
+                @else
+                    @foreach ($recentDonations as $userDonation)
+                        <div class="col-md-3">
+                            <div class="probootstrap-donors text-center probootstrap-animate">
+                                <figure class="media">
+                                    <img src="/img/person_6.jpg" alt="cause cover image" class="img-responsive">
+                                </figure>
+                                <div class="text">
+                                    <h3>{{ Str::limit($userDonation->user->name, 16, '..') }}</h3>
+                                    <p class="donated">Donated <span class="money">${{ $userDonation->amount }}</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="probootstrap-donors text-center probootstrap-animate">
-                        <figure class="media">
-                            <img src="/img/person_5.jpg" alt="cause cover image"
-                                class="img-responsive">
-                        </figure>
-                        <div class="text">
-                            <h3>Janet Morris</h3>
-                            <p class="donated">Donated <span class="money">$250.00</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-
-                    <div class="probootstrap-donors text-center probootstrap-animate">
-                        <figure class="media">
-                            <img src="/img/person_7.jpg" alt="cause cover image"
-                                class="img-responsive">
-                        </figure>
-                        <div class="text">
-                            <h3>Jessa Sy</h3>
-                            <p class="donated">Donated <span class="money">$400.00</span></p>
-                        </div>
-                    </div>
-
-                </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
