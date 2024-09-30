@@ -8,43 +8,6 @@ This project is a **Laravel 11** application that allows users to donate to vari
 
 This project consists of three primary models: User, Donation, and UserDonation. These models represent the users of the application, donation campaigns, and the transactions (donations) made by users, respectively.
 
-```mermaid
-erDiagram
-    USER {
-        int id
-        string name
-        string email
-        string password
-        datetime email_verified_at
-    }
-    
-    DONATION {
-        int id
-        int user_id
-        decimal target_amount
-        string status
-        string title
-        string description
-        datetime due_date
-        string details
-    }
-
-    USERDONATION {
-        int id
-        int user_id
-        int donation_id
-        decimal amount
-    }
-
-    USER ||--o{ DONATION : "has many"
-    DONATION ||--o{ USERDONATION : "has many"
-    USER ||--o{ USERDONATION : "has many"
-    USERDONATION }--|| USER : "belongs to"
-    USERDONATION }--|| DONATION : "belongs to"
-```
-
-By following this schema, the project tracks users, the donations they initiate, and the contributions they make to various campaigns.
-
 * * * * *
 
 ### 1\. **Installation and Setup**
