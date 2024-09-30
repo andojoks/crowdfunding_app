@@ -20,12 +20,12 @@
 
                 @auth
                     <li class="{{ request()->routeIs('causes.my') ? 'active' : '' }}"><a
-                            href="{{ route('causes.my') }}">{{ __('Causes') }}</a></li>
+                            href="{{ route('causes.my') }}">{{ __('My Causes') }}</a></li>
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu">
-                            <li><a :href="{{ route('profile.edit') }}"> {{ __('Profile') }}</a></li>
-                            <li><a :href="{{ route('logout') }}"
+                            <li><a href="{{ route('profile.edit') }}"> {{ __('Profile') }}</a></li>
+                            <li><a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}</a></li>
                         </ul>
