@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "php artisan migrate && php artisan db:seed"
+      sh -c "php artisan migrate && php artisan db:seed && php artisan key:generate"
   
   db:
     platform: "linux/amd64"
