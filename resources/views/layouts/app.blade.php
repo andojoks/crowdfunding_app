@@ -30,6 +30,7 @@
 </head>
 
 <body>
+
     @include('layouts.navigation')
 
     <!-- Page Content -->
@@ -62,7 +63,7 @@
                     if (targetDate.isAfter(moment())) {
                         // Future date - "Due in X time"
                         element.textContent = "Due in " + targetDate.fromNow(
-                        true); // 'fromNow(true)' removes the "in" and "ago"
+                            true); // 'fromNow(true)' removes the "in" and "ago"
                     } else {
                         // Past date - "Closed X time ago"
                         element.textContent = "Closed " + targetDate.fromNow();

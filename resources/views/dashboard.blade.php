@@ -93,7 +93,7 @@
 
                                     <p style="height: 100px; overflow: hidden;">
                                         {{ Str::words($donation->description, 15, '...') }}</p>
-                                    <p><a href="{{ route('causes.view_cause', ['id' => $donation->id]) }}"
+                                    <p><a href="{{ route('cause.details', ['id' => $donation->id]) }}"
                                             class="btn btn-primary btn-black">View Details</a></p>
                                 </div>
                             </div>
@@ -160,10 +160,11 @@
                                 <figure>
                                     <img src="/img/person_1.jpg" alt="cause cover image">
                                 </figure>
-                                <blockquote class="quote">&ldquo;Design must be functional and functionality must be
-                                    translated into visual aesthetics, without any reliance on gimmicks that have to be
-                                    explained.&rdquo; <cite class="author"> &mdash; <span>Mike Fisher</span></cite>
+                                <blockquote class="quote">&ldquo;This platform made it incredibly easy to fundraise for
+                                    our community project. The process was seamless, and the support was amazing!&rdquo;
+                                    <cite class="author"> &mdash; <span>Sarah Johnson</span></cite>
                                 </blockquote>
+
                             </div>
 
                         </div>
@@ -172,11 +173,11 @@
                                 <figure>
                                     <img src="/img/person_2.jpg" alt="cause cover image">
                                 </figure>
-                                <blockquote class="quote">&ldquo;Creativity is just connecting things. When you ask
-                                    creative people how they did something, they feel a little guilty because they
-                                    didn’t really do it, they just saw something. It seemed obvious to them after a
-                                    while.&rdquo; <cite class="author"> &mdash;<span>Jorge Smith</span></cite>
+                                <blockquote class="quote">&ldquo;Thanks to this site, we reached our fundraising goal
+                                    in no time! The user experience is fantastic, and we couldn’t be happier with the
+                                    outcome.&rdquo; <cite class="author"> &mdash; <span>David Lee</span></cite>
                                 </blockquote>
+
                             </div>
                         </div>
                         <div class="item">
@@ -184,10 +185,11 @@
                                 <figure>
                                     <img src="/img/person_3.jpg" alt="cause cover image">
                                 </figure>
-                                <blockquote class="quote">&ldquo;I think design would be better if designers were much
-                                    more skeptical about its applications. If you believe in the potency of your craft,
-                                    where you choose to dole it out is not something to take lightly.&rdquo; <cite
-                                        class="author">&mdash; <span>Brandon White</span></cite></blockquote>
+                                <blockquote class="quote">&ldquo;I never imagined how easy it could be to raise funds
+                                    for my cause. This platform was a game-changer and helped bring my project to
+                                    life.&rdquo; <cite class="author"> &mdash; <span>Amina Clark</span></cite>
+                                </blockquote>
+
                             </div>
                         </div>
 
