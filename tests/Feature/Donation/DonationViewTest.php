@@ -25,6 +25,7 @@ test('user can view personally created causes', function () {
 
     // Act: Make a GET request to view the user's own causes
     $response = $this->get('/my-causes');
+    
 
     // Assert: Check that the response contains the user's causes
     $response->assertStatus(200);

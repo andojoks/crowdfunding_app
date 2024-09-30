@@ -47,12 +47,6 @@
             // Function to update relative time for all elements with class 'relative-time'
             function updateRelativeTimes() {
                 var elements = document.querySelectorAll('.relative-time');
-                // elements.forEach(function(element) {
-                //   var timestamp = element.getAttribute('data-timestamp');
-                //  var relativeTime = moment(timestamp).fromNow();
-                // element.textContent = relativeTime;
-                //});
-
                 elements.forEach(function(element) {
                     var timestamp = element.getAttribute('data-timestamp');
 
